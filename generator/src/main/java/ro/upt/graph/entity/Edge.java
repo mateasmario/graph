@@ -31,6 +31,6 @@ public class Edge {
 
     @Override
     public String toString() {
-        return left + ", " + right;
+        return left + " " + right;
     }
 }
