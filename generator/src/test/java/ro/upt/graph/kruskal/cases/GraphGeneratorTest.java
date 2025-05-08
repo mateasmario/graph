@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class GraphGeneratorTest {
     private static final String OUTPUT_FILE_PATH = "src/main/resources/data.txt";
-    private static final int NO_VERTICES = 500;
+    private static final int NO_VERTICES = 100;
     private GraphGenerator graphGenerator;
 
     private static void deleteFileIfExists() {
