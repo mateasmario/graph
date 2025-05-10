@@ -2,7 +2,6 @@ package ro.upt.argument.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class ArgumentCollection {
     private final List<Argument> argumentList;

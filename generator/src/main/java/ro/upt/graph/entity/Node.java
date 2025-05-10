@@ -37,4 +37,9 @@ public class Node {
         Node node = (Node) o;
         return value == node.value;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
 }

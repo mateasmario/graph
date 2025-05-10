@@ -52,4 +52,9 @@ public class Argument{
         Argument argument = (Argument) o;
         return Objects.equals(key, argument.key);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key);
+    }
 }

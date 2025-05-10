@@ -3,7 +3,6 @@ package ro.upt.graph.generator.impl;
 import ro.upt.graph.entity.Edge;
 import ro.upt.graph.entity.Node;
 import ro.upt.graph.generator.AbstractGraphGenerator;
-import ro.upt.graph.generator.GraphGenerator;
 import ro.upt.graph.util.Randomizer;
 
 import java.util.ArrayList;

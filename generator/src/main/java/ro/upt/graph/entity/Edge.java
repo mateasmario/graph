@@ -1,5 +1,7 @@
 package ro.upt.graph.entity;
 
+import java.util.Objects;
+
 public class Edge {
     protected int left;
     protected int right;
@@ -32,5 +34,10 @@ public class Edge {
     @Override
     public String toString() {
         return left + " " + right;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(left, right);
     }
 }

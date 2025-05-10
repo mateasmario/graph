@@ -1,7 +1,6 @@
 package ro.upt;
 
 import ro.upt.argument.ArgumentParser;
-import ro.upt.argument.entity.Argument;
 import ro.upt.argument.entity.ArgumentCollection;
 import ro.upt.argument.exception.ArgumentParseException;
 import ro.upt.graph.generator.GraphGenerator;
@@ -17,9 +16,9 @@ public class Runner {
 
         ArgumentCollection argumentCollection = argumentParser.parseArguments(args);
 
-        int noVertices = (Integer)(argumentCollection.getByKey("n").getValue());
-        boolean weighted = (Boolean)(argumentCollection.getByKey("w").getValue());
-        String file = (String)(argumentCollection.getByKey("f").getValue());
+        int noVertices = (Integer)argumentCollection.getByKey("n").getValue();
+        boolean weighted = (Boolean)argumentCollection.getByKey("w").getValue();
+        String file = (String)argumentCollection.getByKey("f").getValue();
 
         System.out.println(noVertices);
         System.out.println(weighted);
