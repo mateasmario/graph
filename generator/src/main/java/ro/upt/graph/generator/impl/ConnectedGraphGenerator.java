@@ -4,17 +4,17 @@ import ro.upt.graph.entity.Edge;
 import ro.upt.graph.entity.Node;
 import ro.upt.graph.generator.AbstractGraphGenerator;
 import ro.upt.graph.util.Randomizer;
+import ro.upt.printer.Printer;
+import ro.upt.printer.impl.SysOutPrinter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public abstract class ConnectedGraphGenerator extends AbstractGraphGenerator {
-    private static final Logger logger = Logger.getLogger(ConnectedGraphGenerator.class.getName());
-
+    private final Printer printer = new SysOutPrinter();
     @Override
     public List<Edge> generateForMultipleNodes(int numberOfNodes) {
-        logger.info("Generating graph with " + numberOfNodes + " nodes...");
+        printer.printMessage("Generating graph with " + numberOfNodes + " nodes...");
         List<Edge> spanningTree = generateSpanningTree(numberOfNodes);
         fillWithRemainingEdges(spanningTree, numberOfNodes);
 
@@ -22,7 +22,7 @@ public abstract class ConnectedGraphGenerator extends AbstractGraphGenerator {
     }
 
     private List<Edge> generateSpanningTree(int numberOfNodes) {
-        logger.info("Generating spanning tree...");
+        printer.printMessage("Generating spanning tree...");
         List<Edge> spanningTree = new ArrayList<>();
 
         List<Node> unvisitedNodes = Node.generateListOfNodes(numberOfNodes);
@@ -41,7 +41,7 @@ public abstract class ConnectedGraphGenerator extends AbstractGraphGenerator {
                 unvisitedNodes.remove(leftNode);
             }
         }
-        logger.info("Spanning tree generated.");
+        printer.printMessage("Spanning tree generated.");
 
         return spanningTree;
     }
@@ -62,7 +62,7 @@ public abstract class ConnectedGraphGenerator extends AbstractGraphGenerator {
     private void fillWithRemainingEdges(List<Edge> spanningTree, int numberOfNodes) {
         int maxNumberOfEdges = generateMaxNumberOfEdges(numberOfNodes);
 
-        logger.info("Adding edges until graph reaches " + maxNumberOfEdges + " edges...");
+        printer.printMessage("Adding edges until graph reaches " + maxNumberOfEdges + " edges...");
 
         List<Edge> totalEdgesWithoutSpanningTree = new ArrayList<>();
 
@@ -83,7 +83,7 @@ public abstract class ConnectedGraphGenerator extends AbstractGraphGenerator {
             totalEdgesWithoutSpanningTree.remove(edgeIndex);
         }
 
-        logger.info("Edges generated.");
+        printer.printMessage("Edges generated.");
     }
 
     private int generateMaxNumberOfEdges(int numberOfNodes) {
@@ -92,7 +92,7 @@ public abstract class ConnectedGraphGenerator extends AbstractGraphGenerator {
         }
 
         int edgeMultiplier = getRandomEdgeMultiplier(numberOfNodes);
-        logger.info("Edge multiplier has been set to " + edgeMultiplier + ".");
+        printer.printMessage("Edge multiplier has been set to " + edgeMultiplier + ".");
         return edgeMultiplier * numberOfNodes;
     }
 
