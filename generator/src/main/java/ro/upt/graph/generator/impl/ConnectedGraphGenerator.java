@@ -1,12 +1,12 @@
 package ro.upt.graph.generator.impl;
 
 import ro.upt.graph.entity.Edge;
+import ro.upt.graph.entity.Node;
 import ro.upt.graph.generator.GraphGenerator;
 import ro.upt.graph.util.Randomizer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Logger;
 
 public abstract class ConnectedGraphGenerator implements GraphGenerator {
@@ -25,20 +25,20 @@ public abstract class ConnectedGraphGenerator implements GraphGenerator {
         logger.info("Generating spanning tree...");
         List<Edge> spanningTree = new ArrayList<>();
 
-        List<Integer> unvisitedNodes = fillNodes(numberOfNodes);
-        List<Integer> visitedNodes = new ArrayList<>();
+        List<Node> unvisitedNodes = Node.generateListOfNodes(numberOfNodes);
+        List<Node> visitedNodes = new ArrayList<>();
 
-        visitedNodes.add(0);
-        unvisitedNodes.remove(0);
+        visitedNodes.add(new Node(0));
+        unvisitedNodes.remove(new Node(0));
 
-        while (unvisitedNodes.size() > 0) {
-            int leftNodeIndex = Randomizer.getRandomBetween(0, unvisitedNodes.size());
-            int rightNodeIndex = Randomizer.getRandomBetween(0, visitedNodes.size());
+        while (!isEmpty(unvisitedNodes)) {
+            Node leftNode = getRandomNodeFrom(unvisitedNodes);
+            Node rightNode = getRandomNodeFrom(visitedNodes);
 
-            if (!unvisitedNodes.get(leftNodeIndex).equals(visitedNodes.get(rightNodeIndex))) {
-                spanningTree.add(createEdge(unvisitedNodes.get(leftNodeIndex), visitedNodes.get(rightNodeIndex)));
-                visitedNodes.add(unvisitedNodes.get(leftNodeIndex));
-                unvisitedNodes.remove(leftNodeIndex);
+            if (!leftNode.equals(rightNode)) {
+                addEdgeToSpanningTree(spanningTree, leftNode, rightNode);
+                visitedNodes.add(leftNode);
+                unvisitedNodes.remove(leftNode);
             }
         }
         logger.info("Spanning tree generated.");
@@ -46,28 +46,29 @@ public abstract class ConnectedGraphGenerator implements GraphGenerator {
         return spanningTree;
     }
 
-    private List<Integer> fillNodes(int numberOfNodes) {
-        List<Integer> nodes = new ArrayList<>();
+    private boolean isEmpty(List<Node> nodes) {
+        return nodes.size() == 0;
+    }
 
-        for (int i = 0; i < numberOfNodes; i++) {
-            nodes.add(i);
-        }
+    private Node getRandomNodeFrom(List<Node> nodes) {
+        return nodes.get(Randomizer.getRandomBetween(0, nodes.size()));
+    }
 
-        return nodes;
+    private void addEdgeToSpanningTree(List<Edge> spanningTree, Node leftNode, Node rightNode) {
+        Edge edgeToAdd = createEdge(leftNode, rightNode);
+        spanningTree.add(edgeToAdd);
     }
 
     private void fillWithRemainingEdges(List<Edge> spanningTree, int numberOfNodes) {
-        int edgeMultiplier = numberOfNodes >= 5 ? Randomizer.getRandomBetween(1, (numberOfNodes - 1) / 2) : 1;
-        int totalNoEdges = edgeMultiplier * numberOfNodes;
+        int maxNumberOfEdges = generateMaxNumberOfEdges(numberOfNodes);
 
-        logger.info("Edge multiplier has been set to " + edgeMultiplier + ".");
-        logger.info("Adding edges until graph reaches " + totalNoEdges + " edges...");
+        logger.info("Adding edges until graph reaches " + maxNumberOfEdges + " edges...");
 
         List<Edge> totalEdgesWithoutSpanningTree = new ArrayList<>();
 
         for (int i = 0; i < numberOfNodes; i++) {
             for (int j = i + 1; j < numberOfNodes; j++) {
-                Edge edgeToAdd = createEdge(i, j);
+                Edge edgeToAdd = createEdge(new Node(i), new Node(j));
                 if (edgeIsValid(edgeToAdd, totalEdgesWithoutSpanningTree)
                         && !spanningTree.contains(edgeToAdd)) {
                     totalEdgesWithoutSpanningTree.add(edgeToAdd);
@@ -75,7 +76,7 @@ public abstract class ConnectedGraphGenerator implements GraphGenerator {
             }
         }
 
-        while (spanningTree.size() < totalNoEdges) {
+        while (spanningTree.size() < maxNumberOfEdges) {
             int edgeIndex = Randomizer.getRandomBetween(0, totalEdgesWithoutSpanningTree.size());
 
             spanningTree.add(totalEdgesWithoutSpanningTree.get(edgeIndex));
@@ -83,6 +84,16 @@ public abstract class ConnectedGraphGenerator implements GraphGenerator {
         }
 
         logger.info("Edges generated.");
+    }
+
+    private int generateMaxNumberOfEdges(int numberOfNodes) {
+        int edgeMultiplier = getRandomEdgeMultiplier(numberOfNodes);
+        logger.info("Edge multiplier has been set to " + edgeMultiplier + ".");
+        return edgeMultiplier * numberOfNodes;
+    }
+
+    private int getRandomEdgeMultiplier(int numberOfNodes) {
+        return numberOfNodes >= 5 ? Randomizer.getRandomBetween(1, (numberOfNodes - 1) / 2) : 1;
     }
 
     private boolean edgeIsValid(Edge edge, List<Edge> spanningTree) {
@@ -93,5 +104,5 @@ public abstract class ConnectedGraphGenerator implements GraphGenerator {
         return false;
     }
 
-    protected abstract Edge createEdge(int left, int right);
+    protected abstract Edge createEdge(Node left, Node right);
 }

@@ -1,4 +1,6 @@
-package ro.upt.graph.kruskal.entity;
+package ro.upt.graph.entity.impl;
+
+import ro.upt.graph.entity.WeightedGraph;
 
 import java.io.File;
 import java.io.IOException;

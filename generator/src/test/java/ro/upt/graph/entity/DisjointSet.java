@@ -1,4 +1,4 @@
-package ro.upt.graph.kruskal.entity;
+package ro.upt.graph.entity;
 
 public interface DisjointSet {
 

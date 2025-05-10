@@ -1,4 +1,4 @@
-package ro.upt.graph.kruskal.entity;
+package ro.upt.graph.entity.impl;
 
 /**
  * WeightedEdge represents an edge in a weighted undirected graph

@@ -1,6 +1,6 @@
-package ro.upt.graph.kruskal.entity.impl;
+package ro.upt.graph.entity.impl;
 
-import ro.upt.graph.kruskal.entity.DisjointSet;
+import ro.upt.graph.entity.DisjointSet;
 
 /**
  * Union-Find implemented with a Forest of up-trees

@@ -1,6 +1,7 @@
 package ro.upt.graph.generator.impl;
 
 import ro.upt.graph.entity.Edge;
+import ro.upt.graph.entity.Node;
 import ro.upt.graph.entity.WeightedEdge;
 import ro.upt.graph.util.Randomizer;
 
@@ -10,7 +11,7 @@ public class WeightedConnectedGraphGenerator extends ConnectedGraphGenerator {
 
 
     @Override
-    protected Edge createEdge(int left, int right) {
-        return new WeightedEdge(left, right, Randomizer.getRandomBetween(MIN_WEIGHT, MAX_WEIGHT));
+    protected Edge createEdge(Node left, Node right) {
+        return new WeightedEdge(left.getValue(), right.getValue(), Randomizer.getRandomBetween(MIN_WEIGHT, MAX_WEIGHT));
     }
 }

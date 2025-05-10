@@ -1,6 +1,10 @@
-package ro.upt.graph.kruskal.entity;
+package ro.upt.graph.mst.impl;
 
-import ro.upt.graph.kruskal.entity.impl.DisjointSetUpForest;
+import ro.upt.graph.entity.WeightedGraph;
+import ro.upt.graph.entity.impl.WeightedGraphEdge;
+import ro.upt.graph.entity.DisjointSet;
+import ro.upt.graph.entity.impl.DisjointSetUpForest;
+import ro.upt.graph.mst.MST;
 
 import java.util.Arrays;
 import java.util.LinkedList;
