@@ -15,7 +15,7 @@ public class FileGraphWriter implements GraphWriter {
     }
     @Override
     public void writeGraph(int noVertices, List<Edge> edgeList) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             writer.write(String.valueOf(noVertices));
             writer.newLine();
 

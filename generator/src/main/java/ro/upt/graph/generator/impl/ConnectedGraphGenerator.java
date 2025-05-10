@@ -2,6 +2,7 @@ package ro.upt.graph.generator.impl;
 
 import ro.upt.graph.entity.Edge;
 import ro.upt.graph.entity.Node;
+import ro.upt.graph.generator.AbstractGraphGenerator;
 import ro.upt.graph.generator.GraphGenerator;
 import ro.upt.graph.util.Randomizer;
 
@@ -9,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public abstract class ConnectedGraphGenerator implements GraphGenerator {
+public abstract class ConnectedGraphGenerator extends AbstractGraphGenerator {
     private static final Logger logger = Logger.getLogger(ConnectedGraphGenerator.class.getName());
 
     @Override
-    public List<Edge> generate(int numberOfNodes) {
+    public List<Edge> generateForMultipleNodes(int numberOfNodes) {
         logger.info("Generating graph with " + numberOfNodes + " nodes...");
         List<Edge> spanningTree = generateSpanningTree(numberOfNodes);
         fillWithRemainingEdges(spanningTree, numberOfNodes);
@@ -87,6 +88,10 @@ public abstract class ConnectedGraphGenerator implements GraphGenerator {
     }
 
     private int generateMaxNumberOfEdges(int numberOfNodes) {
+        if (numberOfNodes <= 2) {
+            return 1;
+        }
+
         int edgeMultiplier = getRandomEdgeMultiplier(numberOfNodes);
         logger.info("Edge multiplier has been set to " + edgeMultiplier + ".");
         return edgeMultiplier * numberOfNodes;
