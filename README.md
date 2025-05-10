@@ -23,7 +23,7 @@ The `.jar` file of the generator can be run with the following arguments:
 
 For example, the command below will create a weighted graph with 5 nodes, and store the output in `output.txt`:
 ```
-java -jar generator-1.0-SNAPSHOT.jar -n 5 -w true -f output.txt
+java -jar graph.jar -n 5 -w true -f output.txt
 ```
 
 ## Implementation
